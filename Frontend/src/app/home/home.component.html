@@ -1,0 +1,39 @@
+<div class="container mt-5">
+    <h1>Employee Dashboard</h1>
+    <button routerLink="/add" class="btn btn-primary mb-3 float-end">Add Employee</button>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Joining Date</th>
+                <th>Mobile Number</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let resource of resources">
+                <td>{{ resource.name }}</td>
+                <td>{{ resource.email }}</td>
+                <td>{{ resource.department }}</td>
+                <td>{{ resource.joiningDate | date:'yyyy-MM-dd' }}</td>
+                <td>{{ resource.mobileNumber }}</td>
+
+                <td>
+                    <div class="d-flex align-items-center">
+                        <!-- Edit button with Font Awesome pen icon -->
+                        <button (click)="goToEdit(resource)">
+                        <i class="fa fa-pen"></i>
+                      </button>
+                        <!-- Delete button with Font Awesome trash icon -->
+                        <button class="btn btn-sm btn-danger" (click)="deleteResource(resource.id)">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

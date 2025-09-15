@@ -1,0 +1,36 @@
+##############
+# Dotnet Core
+##############
+bin/
+obj/
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+.vscode/
+.idea/
+*.swp
+.vs/
+*.log
+appsettings.*.json
+!appsettings.Development.json
+_Backup/
+_ReSharper.Caches/
+
+##############
+# Angular
+##############
+node_modules/
+dist/
+out-tsc/
+.angular/
+.vscode/
+.idea/
+*.log
+
+##############
+# OS Specific
+##############
+.DS_Store
+Thumbs.db

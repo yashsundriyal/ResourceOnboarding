@@ -1,0 +1,91 @@
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h1>Edit Employee</h1>
+        </div>
+        <div class="card-body">
+            <form #editForm="ngForm" (ngSubmit)="updateEmployee()">
+
+                <!-- Name -->
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" [(ngModel)]="employee.name" name="name" class="form-control" required />
+                        <div *ngIf="
+                editForm.controls['name']?.invalid &&
+                editForm.controls['name']?.touched
+              " class="text-danger">
+                            Name is required.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" [(ngModel)]="employee.email" name="email" class="form-control" required />
+                        <div *ngIf="
+                editForm.controls['email']?.invalid &&
+                editForm.controls['email']?.touched
+              " class="text-danger">
+                            Valid Email is required.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Department -->
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Department</label>
+                        <input type="text" [(ngModel)]="employee.department" name="department" class="form-control" placeholder="Enter department" required>
+                        <div *ngIf="
+      editForm.controls['department']?.invalid && 
+      editForm.controls['department']?.touched
+    " class="text-danger">
+                            Department is required.
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Joining Date -->
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Joining Date</label>
+                        <input type="date" [(ngModel)]="employee.joiningDate" name="joiningDate" class="form-control" required />
+                        <div *ngIf="
+                editForm.controls['joiningDate']?.invalid &&
+                editForm.controls['joiningDate']?.touched
+              " class="text-danger">
+                            Joining Date is required.
+                        </div>
+                    </div>
+                </div>
+                <!-- MobileNumber -->
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">MobileNumber</label>
+                        <input type="text" [(ngModel)]="employee.mobileNumber" name="mobileNumber" class="form-control" placeholder="Enter Mobile Number" required>
+                        <div *ngIf="
+      editForm.controls['mobileNumber']?.invalid && 
+      editForm.controls['mobileNumber']?.touched
+    " class="text-danger">
+                            MobileNumber is required.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="col-12 d-flex flex-column gap-2">
+                    <button type="submit" class="btn btn-success" [disabled]="editForm.invalid">
+            Update Resource
+          </button>
+                    <button type="button" class="btn btn-secondary" (click)="goBack()">
+            Back
+          </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
