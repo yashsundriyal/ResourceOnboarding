@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\testProject\\EmployeeManagement\\backend\\Backend.csproj": {}
+    "C:\\testProject\\EmployeeManagement\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "C:\\testProject\\EmployeeManagement\\backend\\Backend.csproj": {
+    "C:\\testProject\\EmployeeManagement\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\testProject\\EmployeeManagement\\backend\\Backend.csproj",
+        "projectUniqueName": "C:\\testProject\\EmployeeManagement\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "C:\\testProject\\EmployeeManagement\\backend\\Backend.csproj",
+        "projectPath": "C:\\testProject\\EmployeeManagement\\Backend\\Backend.csproj",
         "packagesPath": "C:\\Users\\varinsha\\.nuget\\packages\\",
-        "outputPath": "C:\\testProject\\EmployeeManagement\\backend\\obj\\",
+        "outputPath": "C:\\testProject\\EmployeeManagement\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\varinsha\\AppData\\Roaming\\NuGet\\NuGet.Config"
