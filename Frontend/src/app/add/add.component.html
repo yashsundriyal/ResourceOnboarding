@@ -1,50 +1,37 @@
-<div class="container mt-5">
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h1>Add Employee</h1>
+<div class="add-card">
+    <h2>Add Employee</h2>
+
+    <form #resourceForm="ngForm" (ngSubmit)="addResource()" class="form-container">
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="resource.Name" name="name" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="resource.Email" name="email" required type="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Department</mat-label>
+            <input matInput [(ngModel)]="resource.Department" name="department" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Joining Date</mat-label>
+            <input matInput [(ngModel)]="resource.JoiningDate" name="joiningDate" required type="date">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Mobile Number</mat-label>
+            <input matInput [(ngModel)]="resource.MobileNumber" name="mobileNumber" required>
+        </mat-form-field>
+
+        <div class="button-group">
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+            <button mat-stroked-button color="warn" (click)="dialogRef.close()">Cancel</button>
         </div>
-        <div class="card-body">
-            <form #resourceForm="ngForm" (ngSubmit)="addResource()">
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" [(ngModel)]="resource.Name" name="name" class="form-control" placeholder="Enter employee name" required>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" [(ngModel)]="resource.Email" name="email" class="form-control" placeholder="Enter email" required>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Department</label>
-                        <input type="text" [(ngModel)]="resource.Department" name="department" class="form-control" placeholder="Enter department" required>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Joining Date</label>
-                        <input type="date" [(ngModel)]="resource.JoiningDate" name="joiningDate" class="form-control" required>
-                    </div>
-                </div>    
-                 <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Mobile Number</label>
-                        <input type="text" [(ngModel)]="resource.MobileNumber" name="mobileNumber" class="form-control" placeholder="Enter mobileNumber" required>
-                    </div>
-                </div>
-
-                <!-- Buttons -->
-                <div class="col-12 d-flex flex-column gap-2">
-                    <button type="submit" class="btn btn-success">Submit</button>
-                    <button type="button" class="btn btn-secondary" (click)="goBack()">Back</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    </form>
 </div>

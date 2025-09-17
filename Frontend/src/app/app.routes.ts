@@ -2,9 +2,11 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
+import { MenuComponent } from './menu/menu.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: MenuComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'add', component: AddComponent },
   { path: 'edit/:id', component: EditComponent },
 ];

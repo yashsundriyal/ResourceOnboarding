@@ -1,0 +1,37 @@
+.add-card {
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    /* proper card padding */
+    width: 100%;
+    max-width: 500px;
+    /* card width inside dialog */
+    box-sizing: border-box;
+    /* include padding in width */
+}
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    /* spacing between form fields */
+    width: 100%;
+}
+
+.full-width {
+    width: 100%;
+    /* form-field takes full card width */
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+}

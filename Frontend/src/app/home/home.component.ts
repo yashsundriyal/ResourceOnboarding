@@ -6,14 +6,21 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome'
 import {EmployeeDetails} from '../models/employee.models';
 import { ResourceService } from '../Service/resource.service';
 import Swal from 'sweetalert2';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   standalone: true,
-  imports: [CommonModule, RouterModule, FontAwesomeModule], // Add RouterModule here
+  imports: [CommonModule, RouterModule, FontAwesomeModule, MatTableModule, MatIconModule, MatToolbarModule, MatCardModule], // Add RouterModule here
 })
 export class HomeComponent implements OnInit {
+   displayedColumns: string[] = ['name', 'email', 'department', 'joiningDate', 'mobileNumber', 'actions'];
   resources: any[] = [];
 
   constructor(private resourceService: ResourceService, private router: Router) {}

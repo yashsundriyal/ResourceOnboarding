@@ -20,14 +20,15 @@
                             "zone.js"
                         ],
                         "tsConfig": "tsconfig.app.json",
-                        "assets": [{
-                            "glob": "**/*",
-                            "input": "public"
-                        }],
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets"
+                        ],
                         "styles": [
-                            "node_modules/bootstrap/dist/css/bootstrap.min.css",
-                            "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-                            "src/styles.css"
+                          "@angular/material/prebuilt-themes/azure-blue.css",
+                          "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                          "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+                          "src/styles.css"
                         ],
                         "scripts": ["node_modules/bootstrap/dist/js/bootstrap.min.js"]
                     },
@@ -82,7 +83,8 @@
                             "input": "public"
                         }],
                         "styles": [
-                            "src/styles.css"
+                          "@angular/material/prebuilt-themes/azure-blue.css",
+                          "src/styles.css"
                         ],
                         "scripts": []
                     }
