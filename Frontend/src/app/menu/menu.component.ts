@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddComponent } from '../add/add.component';
 
+declare var bootstrap: any;
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -15,16 +16,7 @@ export class MenuComponent {
     this.router.navigate(['/home']);
   }
 
-  openAddEmployeeModal() {
-  const dialogRef = this.dialog.open(AddComponent, {
-    width: '800px',      // fixed reasonable width
-    maxHeight: '90vh',   // prevent dialog from exceeding viewport height
-    panelClass: 'custom-dialog-panel' // optional: for extra styling
-  });
-
-  dialogRef.afterClosed().subscribe(res => {
-    // optional: refresh dashboard or handle post-add
-  });
+ 
 }
 
-}
+

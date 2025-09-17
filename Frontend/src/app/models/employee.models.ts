@@ -1,8 +1,9 @@
 export interface EmployeeDetails {
-  id: number;
-  name: string;
-  email: string;
-  department: string;
-  joiningDate: Date | string | null;
-  mobileNumber: string;
+  id: number;                       
+  name: string;                  
+  email: string;                  
+  department: string;             
+  joiningDate: string | Date | null; 
+  CountryCode: string;            
+  mobileNumber: string;             
 }

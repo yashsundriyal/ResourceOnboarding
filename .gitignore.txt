@@ -18,6 +18,10 @@ appsettings.*.json
 _Backup/
 _ReSharper.Caches/
 
+*.exe
+*.dll
+
+
 ##############
 # Angular
 ##############

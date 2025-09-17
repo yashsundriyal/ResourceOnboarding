@@ -20,6 +20,7 @@ export class EditComponent implements OnInit {
     department: '',
     joiningDate: null,
     mobileNumber: '',
+    CountryCode:'+91'
   };
 
   constructor(
@@ -82,7 +83,8 @@ export class EditComponent implements OnInit {
       joiningDate: this.employee.joiningDate
         ? this.formatDate(this.employee.joiningDate)
         : null,
-      mobileNumber: this.employee.mobileNumber
+      mobileNumber: this.employee.mobileNumber,
+      CountryCode:this.employee.CountryCode
     };
   }
   

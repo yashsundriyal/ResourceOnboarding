@@ -1,37 +1,54 @@
-<div class="add-card">
-    <h2>Add Employee</h2>
+<!-- menu.component.html -->
+<div class="container mt-4">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+    Add Resource
+  </button>
+</div>
 
-    <form #resourceForm="ngForm" (ngSubmit)="addResource()" class="form-container">
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
 
-        <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Name</mat-label>
-            <input matInput [(ngModel)]="resource.Name" name="name" required>
-        </mat-form-field>
+            <div class="modal-header">
+                <h5 class="modal-title">Add Employee</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
 
-        <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Email</mat-label>
-            <input matInput [(ngModel)]="resource.Email" name="email" required type="email">
-        </mat-form-field>
+            <form #resourceForm="ngForm" (ngSubmit)="addResource()">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="resource.Name" name="name" required>
+                    </div>
 
-        <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Department</mat-label>
-            <input matInput [(ngModel)]="resource.Department" name="department" required>
-        </mat-form-field>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" [(ngModel)]="resource.Email" name="email" required>
+                    </div>
 
-        <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Joining Date</mat-label>
-            <input matInput [(ngModel)]="resource.JoiningDate" name="joiningDate" required type="date">
-        </mat-form-field>
+                    <div class="mb-3">
+                        <label class="form-label">Department</label>
+                        <input type="text" class="form-control" [(ngModel)]="resource.Department" name="department" required>
+                    </div>
 
-        <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Mobile Number</mat-label>
-            <input matInput [(ngModel)]="resource.MobileNumber" name="mobileNumber" required>
-        </mat-form-field>
+                    <div class="mb-3">
+                        <label class="form-label">Joining Date</label>
+                        <input type="date" class="form-control" [(ngModel)]="resource.JoiningDate" name="joiningDate" required>
+                    </div>
 
-        <div class="button-group">
-            <button mat-raised-button color="primary" type="submit">Submit</button>
-            <button mat-stroked-button color="warn" (click)="dialogRef.close()">Cancel</button>
+                    <div class="mb-3">
+                        <label class="form-label">Mobile Number</label>
+                        <input type="text" class="form-control" [(ngModel)]="resource.MobileNumber" name="mobileNumber" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+
         </div>
-
-    </form>
+    </div>
 </div>

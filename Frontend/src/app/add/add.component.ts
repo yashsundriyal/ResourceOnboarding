@@ -1,20 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import axios from 'axios';
-import { MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
  
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, MatButtonModule, MatInputModule, MatFormFieldModule ],
+  imports: [FormsModule, HttpClientModule],
 })
 export class AddComponent {
   resource = {
@@ -25,10 +21,11 @@ export class AddComponent {
     MobileNumber: ''
   };
  
-  constructor(private router: Router,public dialogRef: MatDialogRef<AddComponent>) {}
+  constructor(private router: Router) {}
  
   addResource() {
     console.log(this.resource,"resource");
+    
     axios.post('http://localhost:5075/api/add', this.resource)
       .then((response) => {
         console.log(response,"response");
@@ -51,6 +48,6 @@ export class AddComponent {
       });
   }
   goBack() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 }

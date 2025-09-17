@@ -1,37 +1,41 @@
-.add-card {
-    display: flex;
-    flex-direction: column;
-    padding: 32px;
-    /* proper card padding */
-    width: 100%;
-    max-width: 500px;
-    /* card width inside dialog */
-    box-sizing: border-box;
-    /* include padding in width */
+/* add.component.css (works because encapsulation is None) */
+
+.custom-dialog-panel .mat-mdc-dialog-container,
+.custom-dialog-panel .mat-dialog-container {
+    padding: 0 !important;
+    border-radius: 10px;
 }
 
-h2 {
-    margin-top: 0;
-    margin-bottom: 24px;
-    text-align: center;
+.dialog-content {
+    padding: 0;
 }
 
 .form-container {
+    padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    /* spacing between form fields */
+    box-sizing: border-box;
     width: 100%;
+    max-width: 520px;
+}
+
+
+/* target both MDC and legacy class names, force block and full width */
+
+.mat-mdc-form-field,
+.mat-form-field,
+.mat-mdc-form-field .mat-mdc-form-field-wrapper,
+.mat-form-field .mat-form-field-wrapper {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box;
 }
 
 .full-width {
-    width: 100%;
-    /* form-field takes full card width */
+    width: 100% !important;
 }
 
-.button-group {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 16px;
+.dialog-actions {
+    padding: 12px 24px;
 }

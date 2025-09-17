@@ -1,42 +1,50 @@
+<span style="cursor:pointer; font-size:20px; display:inline-block; margin-left:-8px; margin-top:-4px;" (click)="goMenu()">
+  <mat-icon style="font-size:20px;">keyboard_arrow_left</mat-icon>
+</span>
+
 <mat-card class="dashboard-card">
-    <mat-toolbar color="primary" class="mb-3">
-        <span>Employee Dashboard</span>
-        <span class="spacer"></span>
-        <button mat-raised-button color="accent" routerLink="/add">
-      <mat-icon>person_add</mat-icon>
-      Add Employee
-    </button>
+
+
+    <mat-toolbar color="primary" class="mb-3 d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+
+            <span class="fw-bold fs-5 ms-2">Employee Dashboard</span>
+        </div>
+        <mat-icon (click)="openAddEmployeeModal()" style="color:#007bff; cursor:pointer; font-size:28px;">
+            person_add
+        </mat-icon>
     </mat-toolbar>
 
-    <table mat-table [dataSource]="resources" class="mat-elevation-z8 full-width-table">
+
+    <table mat-table [dataSource]="resources" matSort class="mat-elevation-z8 full-width-table">
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
             <td mat-cell *matCellDef="let element">{{element.name}}</td>
         </ng-container>
 
         <!-- Email Column -->
         <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
             <td mat-cell *matCellDef="let element">{{element.email}}</td>
         </ng-container>
 
         <!-- Department Column -->
         <ng-container matColumnDef="department">
-            <th mat-header-cell *matHeaderCellDef>Department</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
             <td mat-cell *matCellDef="let element">{{element.department}}</td>
         </ng-container>
 
         <!-- Joining Date Column -->
         <ng-container matColumnDef="joiningDate">
-            <th mat-header-cell *matHeaderCellDef>Joining Date</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Joining Date</th>
             <td mat-cell *matCellDef="let element">{{element.joiningDate | date:'yyyy-MM-dd'}}</td>
         </ng-container>
 
         <!-- Mobile Number Column -->
         <ng-container matColumnDef="mobileNumber">
-            <th mat-header-cell *matHeaderCellDef>Mobile Number</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile Number</th>
             <td mat-cell *matCellDef="let element">{{element.mobileNumber}}</td>
         </ng-container>
 
@@ -44,16 +52,108 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button color="primary" (click)="goToEdit(element)">
-          <mat-icon>edit</mat-icon>
-        </button>
-                <button mat-icon-button color="warn" (click)="deleteResource(element.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
+                <mat-icon class="action-icon" color="primary" (click)="goToEdit(element)">edit</mat-icon>
+                <mat-icon class="action-icon" color="warn" (click)="deleteResource(element.id)">delete</mat-icon>
             </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 </mat-card>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEmployeeModalLabel">
+                    {{ editing ? 'Edit Employee' : 'Add Employee' }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+
+            <form #resourceForm="ngForm" (ngSubmit)="submitResource()" novalidate>
+                <div class="modal-body">
+                    <!-- Name -->
+                    <div class="row">
+                        <div class="col-4 mb-3">
+                            <label class="form-label">Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="name" [(ngModel)]="resource.Name" #name="ngModel" placeholder="Enter full name" required>
+                            <div *ngIf="name.invalid && name.touched" class="text-danger small">
+                                Please enter Name
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="row">
+                        <div class="col-4 mb-3">
+                            <label class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" name="email" [(ngModel)]="resource.Email" #email="ngModel" placeholder="Enter email." required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                            <div *ngIf="email.invalid && email.touched" class="text-danger small">
+                                Please enter a valid Email
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Department -->
+                    <div class="row">
+                        <div class="col-4 mb-3">
+                            <label class="form-label">Department <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="department" [(ngModel)]="resource.Department" #department="ngModel" placeholder="Enter depatment." required>
+                            <div *ngIf="department.invalid && department.touched" class="text-danger small">
+                                Please enter Department
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Joining Date -->
+                    <div class="row">
+                        <div class="col-4 mb-3">
+                            <label class="form-label">Joining Date <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" name="joiningDate" [(ngModel)]="resource.JoiningDate" #joiningDate="ngModel" required>
+                            <div *ngIf="joiningDate.invalid && joiningDate.touched" class="text-danger small">
+                                Please select Joining Date
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile -->
+                    <div class="row mb-3">
+                        <div class="col-auto">
+                            <label class="form-label">Code *</label>
+                            <select class="form-select form-select-sm" style="width: 80px;" name="countryCode" [(ngModel)]="resource.CountryCode" #countryCode="ngModel" required>
+            <option value="+91">+91</option>
+            <option value="+1">+1</option>
+            <option value="+92">+92</option>
+        </select>
+                        </div>
+
+                        <div class="col-4 mb-3">
+                            <label class="form-label">Mobile *</label>
+                            <input type="text" class="form-control" name="mobileNumber" [(ngModel)]="resource.MobileNumber" #mobileNumber="ngModel" placeholder="Enter mobile no." required pattern="^[0-9]{10}$" maxlength="10">
+                        </div>
+                    </div>
+
+                    <div *ngIf="(countryCode.invalid && countryCode.touched) || (mobileNumber.invalid && mobileNumber.touched)" class="text-danger small">
+                        Please enter a valid 10-digit Mobile Number
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" (click)="goBack()" data-bs-dismiss="modal">Back</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="resourceForm.invalid">
+                        {{ editing ? 'Update' : 'Submit' }}
+                    </button>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

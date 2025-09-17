@@ -1,0 +1,30 @@
+.action-icon {
+    cursor: pointer;
+    margin-right: 12px;
+}
+
+.action-icon:last-child {
+    margin-right: 0;
+}
+
+
+/* Remove default button styles if needed (for earlier approach) */
+
+.plain-icon {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+    width: 24px;
+    height: 24px;
+}
+
+.filter-row td {
+    padding: 4px 8px;
+}
+
+.filter-row input {
+    width: 100%;
+    font-size: 13px;
+}
