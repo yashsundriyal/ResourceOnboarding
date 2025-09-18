@@ -10,9 +10,9 @@
 
             <span class="fw-bold fs-5 ms-2">Employee Dashboard</span>
         </div>
-        <mat-icon (click)="openAddEmployeeModal()" style="color:#007bff; cursor:pointer; font-size:28px;">
-            person_add
-        </mat-icon>
+        <fa-icon [icon]="faUserPlus" style="color:#007bff; cursor:pointer; font-size:18px;margin-top:6px;" (click)="openAddEmployeeModal()">
+        </fa-icon>
+
     </mat-toolbar>
 
 
@@ -52,10 +52,14 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let element">
-                <mat-icon class="action-icon" color="primary" (click)="goToEdit(element)">edit</mat-icon>
-                <mat-icon class="action-icon" color="warn" (click)="deleteResource(element.id)">delete</mat-icon>
+                <fa-icon [icon]="faEdit" class="action-icon text-primary me-2" style="cursor:pointer;font-size:20px;" (click)="goToEdit(element)">
+                </fa-icon>
+
+                <fa-icon [icon]="faTrash" class="action-icon text-danger" style="cursor:pointer; margin-left:10px;font-size:20px" (click)="deleteResource(element.id)">
+                </fa-icon>
             </td>
         </ng-container>
+
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 

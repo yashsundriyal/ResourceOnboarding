@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import axios from 'axios';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router'; // Import RouterModule!
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome'
 import {EmployeeDetails} from '../models/employee.models';
 import { ResourceService } from '../Service/resource.service';
 import Swal from 'sweetalert2';
@@ -15,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faUserPlus,  faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 declare var bootstrap: any;
 @Component({
@@ -24,6 +25,10 @@ declare var bootstrap: any;
   imports: [CommonModule, RouterModule, FontAwesomeModule, MatSortModule,  MatTableModule, MatIconModule, MatToolbarModule, MatCardModule,  FormsModule, MatFormFieldModule, MatInputModule], // Add RouterModule here
 })
 export class HomeComponent implements OnInit {
+  faUserPlus = faUserPlus;
+  faEdit = faEdit;
+  faTrash = faTrash;
+
 resource: {
   id: number | null;
   Name: string;
@@ -79,12 +84,15 @@ displayedColumns: string[] = ['name', 'email', 'department', 'joiningDate', 'mob
     ? employee.mobileNumber.split('-')
     : [employee.CountryCode || '+91', employee.mobileNumber];
 
+     const formattedDate = employee.joiningDate
+    ? new Date(employee.joiningDate).toISOString().split('T')[0]  // yyyy-MM-dd
+    : '';
   this.resource = {
     id:employee.id,
     Name: employee.name,
     Email: employee.email,
     Department: employee.department,
-    JoiningDate: employee.joiningDate,
+    JoiningDate: formattedDate,
     CountryCode: country,
     MobileNumber: mobile
   };
@@ -158,24 +166,41 @@ this.originalResource = {
   }
 }
 
-   submitResource() {
-  const payload = { ...this.resource };
-  payload.MobileNumber = `${payload.CountryCode}-${payload.MobileNumber}`;
-    console.log(payload,"payload");
-    console.log(this.originalResource,"orginalResource");
+   private normalizeDate(dateStr: string | null): string | null {
+  if (!dateStr) return null;
+  return new Date(dateStr).toISOString().split('T')[0]; // keep only yyyy-MM-dd
+}
+
+private areEqual(payload: any, original: any): boolean {
+  return (
+    payload.name === original.name &&
+    payload.email === original.email &&
+    payload.department === original.department &&
+    this.normalizeDate(payload.joiningDate) === this.normalizeDate(original.joiningDate) &&
+    payload.mobileNumber === original.mobileNumber
+  );
+}
+
+submitResource() {
+  const payload = {
+    id: this.resource.id ?? 0,
+    name: this.resource.Name,
+    email: this.resource.Email,
+    department: this.resource.Department,
+    joiningDate: this.resource.JoiningDate
+      ? new Date(this.resource.JoiningDate).toISOString()
+      : null,
+    mobileNumber: `${this.resource.CountryCode}-${this.resource.MobileNumber}`
+  };
+
+  console.log(payload, "payload");
+  console.log(this.originalResource, "originalResource");
+
   if (this.editing) {
-        if (
-      this.originalResource &&
-      payload.Name === this.originalResource.name &&
-      payload.Email === this.originalResource.email &&
-      payload.Department === this.originalResource.department &&
-      payload.JoiningDate === this.originalResource.joiningDate &&
-      payload.MobileNumber === this.originalResource.mobileNumber
-    ) {
+    if (this.originalResource && this.areEqual(payload, this.originalResource)) {
       Swal.fire('No changes detected', 'You did not change any fields.', 'info');
-      return; // stop submission
+      return;
     }
-    // Update API
     axios.put(`http://localhost:5075/api/Update/${payload.id}`, payload)
       .then(() => {
         Swal.fire('Updated!', 'The resource was updated successfully.', 'success')
@@ -183,15 +208,21 @@ this.originalResource = {
       })
       .catch(() => Swal.fire('Error!', 'Something went wrong.', 'error'));
   } else {
-    // Add API
     axios.post('http://localhost:5075/api/add', payload)
       .then(() => {
         Swal.fire('Added!', 'The resource was added successfully.', 'success')
           .then(() => window.location.reload());
       })
-      .catch(() => Swal.fire('Error!', 'Something went wrong.', 'error'));
+      .catch((error) => {
+        if (error.response && error.response.status === 409) {
+          Swal.fire('Duplicate Email', error.response.data.message, 'warning');
+        } else {
+          Swal.fire('Error!', 'Something went wrong.', 'error');
+        }
+      });
   }
 }
+
 
   goBack() {
     this.router.navigate(['/home']);

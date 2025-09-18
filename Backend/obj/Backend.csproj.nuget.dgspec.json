@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\YASH\\source\\EmployeeManagement\\ResourceOnboarding\\backend\\Backend.csproj": {}
+    "C:\\Users\\YASH\\source\\EmployeeManagement\\ResourceOnboarding\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\YASH\\source\\EmployeeManagement\\ResourceOnboarding\\backend\\Backend.csproj": {
+    "C:\\Users\\YASH\\source\\EmployeeManagement\\ResourceOnboarding\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\YASH\\source\\EmployeeManagement\\ResourceOnboarding\\backend\\Backend.csproj",
+        "projectUniqueName": "C:\\Users\\YASH\\source\\EmployeeManagement\\ResourceOnboarding\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "C:\\Users\\YASH\\source\\EmployeeManagement\\ResourceOnboarding\\backend\\Backend.csproj",
+        "projectPath": "C:\\Users\\YASH\\source\\EmployeeManagement\\ResourceOnboarding\\Backend\\Backend.csproj",
         "packagesPath": "C:\\Users\\YASH\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\YASH\\source\\EmployeeManagement\\ResourceOnboarding\\backend\\obj\\",
+        "outputPath": "C:\\Users\\YASH\\source\\EmployeeManagement\\ResourceOnboarding\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\YASH\\AppData\\Roaming\\NuGet\\NuGet.Config",

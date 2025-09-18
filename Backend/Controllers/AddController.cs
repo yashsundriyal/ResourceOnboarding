@@ -17,19 +17,25 @@ namespace ResourceOnboardingAPI.Controllers
         [HttpPost]
         public IActionResult AddResource(EmployeeDetails resource)
         {
-            resource.JoiningDate = DateTime.SpecifyKind(resource.JoiningDate, DateTimeKind.Utc);
-            _context.EmployeeDetails.Add(resource);
-           int result = _context.SaveChanges(); // returns number of state entries written to the database
-        if (result > 0)
-        {
-            return CreatedAtAction(nameof(AddResource), new { id = resource.Id },
-                new { message = "Employee added successfully!", employeeId = resource.Id, rowsAffected = result });
-        }
-        else
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                new { message = "No changes were saved to the database." });
-        }
+            try
+            {
+                resource.JoiningDate = DateTime.SpecifyKind(resource.JoiningDate, DateTimeKind.Utc);
+                _context.EmployeeDetails.Add(resource);
+                _context.SaveChanges();
+
+                return Ok(new { message = "Employee added successfully!", employeeId = resource.Id });
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+            {
+                Console.WriteLine(ex);
+               if (ex.InnerException is Npgsql.PostgresException pgEx && pgEx.SqlState == "23505")
+                {
+                    return Conflict(new { message = "Email already exists. Please use a different email." });
+                }
+
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new { message = "An unexpected error occurred.", details = ex.Message });
+            }
         }
     }
 }
