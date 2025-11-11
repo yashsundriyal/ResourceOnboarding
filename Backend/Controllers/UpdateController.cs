@@ -1,9 +1,11 @@
 using Employee.Data;
 using Employee.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ResourceOnboardingAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UpdateController : ControllerBase

@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="loginbox">
+        <div class="header">LOGIN</div>
+        <div class="form" [formGroup]="loginForm">
+            <input type="text" placeholder="Username" formControlName="username">
+            <input type="password" placeholder="Password" formControlName="password">
+
+            <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+            <a class="signup" routerLink="/signup">Sign up now</a>
+            <button (click)="onSubmit()">Login</button>
+        </div>
+    </div>
+</div>

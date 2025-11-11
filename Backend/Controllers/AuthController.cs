@@ -44,9 +44,27 @@ public class AuthController : ControllerBase
         );
         return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
     }
-    public class LoginModel
+    [HttpPost("Signup")]
+    public IActionResult Signup([FromBody] SignupModel model)
     {
-        public string Username { get; set; }
-        public string Password { get; set; }
+        if (_appDbContext.Users.Any(u => u.Username == model.Username))
+            return Conflict(new { message = "Username already exists." });
+
+        if (_appDbContext.Users.Any(u => u.Email == model.EmailId))
+            return Conflict(new { message = "Email already exists." });
+
+        var user = new User
+        {
+            Username = model.Username,
+            Email = model.EmailId,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password),
+            Role = "User"
+        };
+
+        _appDbContext.Users.Add(user);
+        _appDbContext.SaveChanges();
+
+        return Ok(new { message = "User registered successfully." });
     }
+    
 }

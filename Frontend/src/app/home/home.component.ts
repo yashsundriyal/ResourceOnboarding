@@ -25,6 +25,7 @@ declare var bootstrap: any;
   imports: [CommonModule, RouterModule, FontAwesomeModule, MatSortModule,  MatTableModule, MatIconModule, MatToolbarModule, MatCardModule,  FormsModule, MatFormFieldModule, MatInputModule], // Add RouterModule here
 })
 export class HomeComponent implements OnInit {
+  token: string | null = null;
   faUserPlus = faUserPlus;
   faEdit = faEdit;
   faTrash = faTrash;
@@ -55,17 +56,25 @@ displayedColumns: string[] = ['name', 'email', 'department', 'joiningDate', 'mob
   editing = false; // true if editing an existing record
   constructor(private resourceService: ResourceService, private router: Router) {}
   ngOnInit() {
+    this.token = localStorage.getItem('token');
     this.getResources();
   }
 
    ngAfterViewInit() {
     this.resources.sort = this.sort; // attach sort to datasource
   }
-  getResources() {
-    axios.get('http://localhost:5075/api/home')
-      .then(response => this.resources.data = response.data)
-      .catch(error => console.error('API error:', error));
-  }
+ getResources() {
+  const token = localStorage.getItem('token');
+
+  axios.get('http://localhost:5075/api/home', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  .then(response => this.resources.data = response.data)
+  .catch(error => console.error('API error:', error));
+}
+
   editResource(resource: any) {
     // Implement logic to navigate to an edit page or open an edit modal
     console.log('Edit resource', resource);
@@ -125,7 +134,11 @@ this.originalResource = {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5075/api/home/${id}`)
+        axios.delete(`http://localhost:5075/api/home/${id}`,{
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        })
           .then(response => {
             Swal.fire(
               'Deleted!',
@@ -201,14 +214,23 @@ submitResource() {
       Swal.fire('No changes detected', 'You did not change any fields.', 'info');
       return;
     }
-    axios.put(`http://localhost:5075/api/Update/${payload.id}`, payload)
+    axios.put(`http://localhost:5075/api/Update/${payload.id}`, payload,{
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    })
       .then(() => {
         Swal.fire('Updated!', 'The resource was updated successfully.', 'success')
           .then(() => window.location.reload());
       })
       .catch(() => Swal.fire('Error!', 'Something went wrong.', 'error'));
   } else {
-    axios.post('http://localhost:5075/api/add', payload)
+    axios.post('http://localhost:5075/api/add', payload,{
+       headers:{
+        Authorization: `Bearer ${this.token}`
+       }
+    }
+    )
       .then(() => {
         Swal.fire('Added!', 'The resource was added successfully.', 'success')
           .then(() => window.location.reload());

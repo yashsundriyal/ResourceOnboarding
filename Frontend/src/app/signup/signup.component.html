@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="loginbox">
+        <div class="header">SIGN UP</div>
+
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form">
+            <input type="text" formControlName="username" placeholder="Username">
+            <input type="email" formControlName="emailId" placeholder="Email ID">
+            <input type="password" formControlName="password" placeholder="Password">
+
+            <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+            <button type="submit">Sign Up</button>
+            <a class="signup" routerLink="/">Already have an account? Login</a>
+        </form>
+    </div>
+</div>
