@@ -1,6 +1,6 @@
-<span style="cursor:pointer; font-size:20px; display:inline-block; margin-left:-8px; margin-top:-4px;" (click)="goMenu()">
+<!-- <span style="cursor:pointer; font-size:20px; display:inline-block; margin-left:-8px; margin-top:-4px;" (click)="goMenu()">
   <mat-icon style="font-size:20px;">keyboard_arrow_left</mat-icon>
-</span>
+</span> -->
 
 <mat-card class="dashboard-card">
 
@@ -10,10 +10,22 @@
 
             <span class="fw-bold fs-5 ms-2">Employee Dashboard</span>
         </div>
-        <fa-icon [icon]="faUserPlus" style="color:#007bff; cursor:pointer; font-size:18px;margin-top:6px;" (click)="openAddEmployeeModal()">
+        <fa-icon *ngIf="isAdmin()" [icon]="faUserPlus" style="color:#007bff; cursor:pointer; font-size:18px;margin-top:6px;" (click)="openAddEmployeeModal()">
         </fa-icon>
 
     </mat-toolbar>
+
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 12px;">
+        <input type="text" (keyup)="applyFilter($event)" placeholder="Search by any field" style="
+      width: 250px;
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      height: 32px;
+    " />
+    </div>
 
 
     <table mat-table [dataSource]="resources" matSort class="mat-elevation-z8 full-width-table">
@@ -65,6 +77,9 @@
 
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <mat-paginator [length]="resources.data.length" [pageSize]="10" [hidePageSize]="true" showFirstLastButtons>
+    </mat-paginator>
+
 </mat-card>
 
 <!-- Bootstrap Modal -->

@@ -1,13 +1,46 @@
 <div class="layout">
     <!-- Header -->
     <header class="header">
-        <h1 class="title">Employee Portal</h1>
+        <div class="header-left">
+            <!-- Hamburger Menu (leftmost) -->
+            <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-btn">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+            <!-- Title right next to it -->
+            <h1 class="title">Employee Portal</h1>
+        </div>
 
         <div class="header-right">
             <img src="assets/Logo.wine.png" alt="Capgemini" class="logo" />
-            <button class="signout" (click)="logout()">Sign Out</button>
+            <button class="signout" *ngIf="!showSignOut()" (click)="logout()">Sign Out</button>
         </div>
     </header>
+
+    <!-- Dropdown Menu -->
+    <!-- Dropdown Menu -->
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/menu">
+    <mat-icon>dashboard</mat-icon>
+    <span>Menu</span>
+  </button>
+
+        <button mat-menu-item routerLink="/home">
+    <mat-icon>home</mat-icon>
+    <span>Home</span>
+  </button>
+
+        <!-- <button mat-menu-item routerLink="/add">
+    <mat-icon>add_circle</mat-icon>
+    <span>Add Employee</span>
+  </button> -->
+
+        <button mat-menu-item routerLink="/users">
+    <mat-icon>group</mat-icon>
+    <span>Users</span>
+  </button>
+    </mat-menu>
+
 
     <!-- Main content -->
     <main class="content">

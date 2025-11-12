@@ -36,7 +36,10 @@ export class LoginComponent {
     this.http.post('http://localhost:5075/api/auth/login', { username, password })
       .subscribe({
         next: (res: any) => {
+          console.log(res);
           localStorage.setItem('token', res.token);
+          localStorage.setItem('role', res.role);
+          console.log("role",res.role);
           console.log('Login successful');
           this.router.navigate(['/home']);
         },

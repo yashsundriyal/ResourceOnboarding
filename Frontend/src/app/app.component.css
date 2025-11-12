@@ -69,3 +69,24 @@ footer.footer {
     font-size: 14px;
     color: #333;
 }
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    color: #003366;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-top: 3px;
+    /* lowers the icon slightly so it's level with text */
+}
+
+.menu-btn mat-icon {
+    font-size: 26px;
+    vertical-align: middle;
+}

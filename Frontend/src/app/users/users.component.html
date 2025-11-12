@@ -1,35 +1,37 @@
-
 <div class="users-container mat-elevation-z8">
-  <h2>User Roles</h2>
+    <h2>User Roles</h2>
 
-  <table mat-table [dataSource]="users" class="mat-elevation-z8" style="width: 100%;">
+    <table mat-table [dataSource]="users" class="mat-elevation-z8" style="width: 100%">
+        <!-- Username Column -->
+        <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef>Username</th>
+            <td mat-cell *matCellDef="let user">{{ user.userName }}</td>
+        </ng-container>
 
-    <!-- Username Column -->
-    <ng-container matColumnDef="username">
-      <th mat-header-cell *matHeaderCellDef> Username </th>
-      <td mat-cell *matCellDef="let user"> {{ user.username }} </td>
-    </ng-container>
+        <!-- Role Column -->
+        <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef>Role</th>
+            <td mat-cell *matCellDef="let user">{{ user.role }}</td>
+        </ng-container>
 
-    <!-- Role Column -->
-    <ng-container matColumnDef="role">
-      <th mat-header-cell *matHeaderCellDef> Role </th>
-      <td mat-cell *matCellDef="let user"> {{ user.role }} </td>
-    </ng-container>
+        <!-- Change Role Column -->
+        <!-- Change Role Column -->
+        <ng-container matColumnDef="changeRole">
+            <th mat-header-cell *matHeaderCellDef>Change Role</th>
+            <td mat-cell *matCellDef="let user">
+                <div style="display: flex; align-items: center;">
+                    <mat-form-field appearance="outline" style="width: 150px; margin: 0">
+                        <mat-select [value]="user.role" (selectionChange)="changeRole(user.userName, $event.value)">
+                            <mat-option *ngFor="let role of roles" [value]="role">{{ role }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </td>
+        </ng-container>
 
-    <!-- Change Role Column -->
-    <ng-container matColumnDef="changeRole">
-      <th mat-header-cell *matHeaderCellDef> Change Role </th>
-      <td mat-cell *matCellDef="let user">
-        <mat-form-field appearance="outline" style="width: 150px;">
-          <mat-select [value]="user.role" (selectionChange)="changeRole(user.username, $event.value)">
-            <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </td>
-    </ng-container>
-
-    <!-- Header and Row Definitions -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+        <!-- Header and Row Definitions -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
 </div>

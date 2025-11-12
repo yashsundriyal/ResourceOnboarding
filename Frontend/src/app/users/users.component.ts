@@ -6,9 +6,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import Swal from 'sweetalert2';
 
 interface User {
-  username: string;
+  userName: string;
   role: string;
 }
 
@@ -21,10 +22,10 @@ interface User {
     MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
   token: string | null = null;
@@ -40,20 +41,51 @@ export class UsersComponent implements OnInit {
   }
 
   fetchUsers(): void {
-    this.http.get<User[]>('http://localhost:5075/api/auth/GetUsers',{
-      headers:{
-        Authentication: `Bearer ${this.token}`
-      }
-    })
-      .subscribe(data => this.users = data);
-      console.log(this.users);
+    this.http
+      .get<User[]>('http://localhost:5075/api/auth/GetUsers', {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      })
+      .subscribe((data) => {
+        this.users = data;
+        console.log(this.users);
+      });
   }
 
   changeRole(username: string, newRole: string): void {
-    this.http.put(`http://localhost:5075/api/auth/RoleChange?userName=${username}&newRole=${newRole}`, {})
-      .subscribe(() => {
-        console.log(`Role updated for ${username}`);
-        this.fetchUsers();
-      });
+    Swal.fire({
+      title: `Change role of ${username}?`,
+      text: `Set role to "${newRole}"`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, change it',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const body = { userName: username, role: newRole };
+        console.log(body,"body");
+        this.http
+          .put('http://localhost:5075/api/auth/RoleChange', body, {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+              'Content-Type': 'application/json', // critical
+            },
+          })
+          .subscribe({
+            next: () => {
+              Swal.fire(
+                'Updated!',
+                `${username}'s role set to ${newRole}`,
+                'success'
+              );
+            },
+            error: (err) => {
+              const msg = err.error?.message || 'Could not update role';
+              Swal.fire('Error', msg, 'error');
+            },
+          });
+      }
+    });
   }
 }

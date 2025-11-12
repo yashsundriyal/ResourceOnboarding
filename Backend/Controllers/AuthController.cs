@@ -42,7 +42,7 @@ public class AuthController : ControllerBase
             expires: DateTime.Now.AddMinutes(Convert.ToDouble(_config["Jwt:ExpiryMinutes"])),
             signingCredentials: creds
         );
-        return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+        return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token), role = user.Role });
     }
     [HttpPost("Signup")]
     public IActionResult Signup([FromBody] SignupModel model)
@@ -66,29 +66,31 @@ public class AuthController : ControllerBase
 
         return Ok(new { message = "User registered successfully." });
     }
-   [HttpPut("RoleChange")]
-public IActionResult RoleChange([FromBody] RoleChangeDto dto)
-{
-    var user = _appDbContext.Users.FirstOrDefault(u => u.Username == dto.UserName);
-    if (user == null)
-        return NotFound(new { message = "Username doesn't exist." });
+    [HttpPut("RoleChange")]
+    public IActionResult RoleChange([FromBody] RoleChangeDto dto)
+    {
+        Console.WriteLine($"Incoming: {dto?.UserName} - {dto?.Role}");
 
-    user.Role = dto.Role;
-    _appDbContext.SaveChanges();
+        var user = _appDbContext.Users.FirstOrDefault(u => u.Username == dto.UserName);
+        if (user == null)
+            return NotFound(new { message = "Username doesn't exist." });
 
-    return Ok(new { message = "Role updated successfully.", user });
-}
-  [HttpGet("GetUsers")]
-public IActionResult GetUsers()
-{
-    var users = _appDbContext.Users
-        .Select(u => new RoleChangeDto
-        {
-            UserName = u.Username,
-            Role = u.Role
-        })
-        .ToList();
+        user.Role = dto.Role;
+        _appDbContext.SaveChanges();
 
-    return Ok(users);
-}
+        return Ok(new { message = "Role updated successfully.", user });
+    }
+    [HttpGet("GetUsers")]
+    public IActionResult GetUsers()
+    {
+        var users = _appDbContext.Users
+            .Select(u => new RoleChangeDto
+            {
+                UserName = u.Username,
+                Role = u.Role
+            })
+            .ToList();
+
+        return Ok(users);
+    }
 }
