@@ -66,5 +66,29 @@ public class AuthController : ControllerBase
 
         return Ok(new { message = "User registered successfully." });
     }
-    
+   [HttpPut("RoleChange")]
+public IActionResult RoleChange([FromBody] RoleChangeDto dto)
+{
+    var user = _appDbContext.Users.FirstOrDefault(u => u.Username == dto.UserName);
+    if (user == null)
+        return NotFound(new { message = "Username doesn't exist." });
+
+    user.Role = dto.Role;
+    _appDbContext.SaveChanges();
+
+    return Ok(new { message = "Role updated successfully.", user });
+}
+  [HttpGet("GetUsers")]
+public IActionResult GetUsers()
+{
+    var users = _appDbContext.Users
+        .Select(u => new RoleChangeDto
+        {
+            UserName = u.Username,
+            Role = u.Role
+        })
+        .ToList();
+
+    return Ok(users);
+}
 }
