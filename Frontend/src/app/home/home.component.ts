@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
     this.resources.sort = this.sort;
     this.resources.paginator = this.paginator;
 
-    this.paginator._changePageSize(10);
+    this.paginator._changePageSize(5);
   }
 
   getResources() {
