@@ -35,7 +35,7 @@
     <span>Add Employee</span>
   </button> -->
 
-        <button mat-menu-item routerLink="/users">
+        <button mat-menu-item routerLink="/users" *ngIf="isAdmin()">
     <mat-icon>group</mat-icon>
     <span>Users</span>
   </button>

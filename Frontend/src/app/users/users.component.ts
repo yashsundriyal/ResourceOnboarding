@@ -29,14 +29,16 @@ interface User {
 })
 export class UsersComponent implements OnInit {
   token: string | null = null;
+  currentRole: string | null = null;
   users: User[] = [];
-  roles: string[] = ['Admin', 'User', 'Manager'];
+  roles: string[] = ['Admin', 'User'];
   displayedColumns: string[] = ['username', 'role', 'changeRole'];
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.token = localStorage.getItem('token');
+    this.currentRole = localStorage.getItem('role');
     this.fetchUsers();
   }
 

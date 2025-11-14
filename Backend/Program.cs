@@ -52,6 +52,24 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    if (!db.Users.Any())
+    {
+        var admin = new Employee.Models.User
+        {
+            Username = "admin",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123"),
+            Role = "SuperAdmin",
+            Email = "admin@gmail.com"
+        };
+
+        db.Users.Add(admin);
+        db.SaveChanges();
+    }
+}
 
 app.UseRouting();
 app.UseCors("AllowAngularApp");

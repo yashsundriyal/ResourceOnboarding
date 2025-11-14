@@ -14,21 +14,29 @@
             <td mat-cell *matCellDef="let user">{{ user.role }}</td>
         </ng-container>
 
-        <!-- Change Role Column -->
+
         <!-- Change Role Column -->
         <ng-container matColumnDef="changeRole">
             <th mat-header-cell *matHeaderCellDef>Change Role</th>
+
             <td mat-cell *matCellDef="let user">
-                <div style="display: flex; align-items: center;">
+
+                <div *ngIf="user.role === 'SuperAdmin'; else editableRole">
+                    <span style="color: #555; font-weight: 500;"></span>
+                </div>
+                <ng-template #editableRole>
                     <mat-form-field appearance="outline" style="width: 150px; margin: 0">
                         <mat-select [value]="user.role" (selectionChange)="changeRole(user.userName, $event.value)">
-                            <mat-option *ngFor="let role of roles" [value]="role">{{ role }}
+                            <mat-option *ngFor="let role of roles" [value]="role">
+                                {{ role }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                </div>
+                </ng-template>
+
             </td>
         </ng-container>
+
 
         <!-- Header and Row Definitions -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

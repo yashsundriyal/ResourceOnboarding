@@ -22,6 +22,10 @@ export class AppComponent {
     const path = this.router.url;
     return path === '/' || path === '/signup';
   }
+isAdmin(): boolean {
+  const role = localStorage.getItem('role');
+  return role === 'Admin' || role === 'SuperAdmin';
+}
 
   logout() {
     this.auth.logout(); 
