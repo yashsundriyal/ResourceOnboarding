@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUserPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { environment } from '../../environment';
 
 declare var bootstrap: any;
 @Component({
@@ -105,7 +106,7 @@ export class HomeComponent implements OnInit {
     const token = localStorage.getItem('token');
 
     axios
-      .get('http://localhost:5075/api/home', {
+      .get(`${environment.apiUrl}/api/home`, {  
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -174,7 +175,7 @@ export class HomeComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5075/api/home/${id}`, {
+          .delete(`${environment.apiUrl}/api/home/${id}`, {
             headers: {
               Authorization: `Bearer ${this.token}`,
             },
@@ -259,7 +260,7 @@ export class HomeComponent implements OnInit {
         return;
       }
       axios
-        .put(`http://localhost:5075/api/Update/${payload.id}`, payload, {
+        .put(`${environment.apiUrl}/api/Update/${payload.id}`, payload, {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
@@ -274,7 +275,7 @@ export class HomeComponent implements OnInit {
         .catch(() => Swal.fire('Error!', 'Something went wrong.', 'error'));
     } else {
       axios
-        .post('http://localhost:5075/api/add', payload, {
+        .post(`${environment.apiUrl}/api/add`, payload, {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },

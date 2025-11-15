@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2';
+import { environment } from '../../environment';
 
 interface User {
   userName: string;
@@ -44,7 +45,7 @@ export class UsersComponent implements OnInit {
 
   fetchUsers(): void {
     this.http
-      .get<User[]>('http://localhost:5075/api/auth/GetUsers', {
+      .get<User[]>(`${environment.apiUrl}/api/auth/GetUsers`, {
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
@@ -68,7 +69,7 @@ export class UsersComponent implements OnInit {
         const body = { userName: username, role: newRole };
         console.log(body,"body");
         this.http
-          .put('http://localhost:5075/api/auth/RoleChange', body, {
+          .put(`${environment.apiUrl}/api/auth/RoleChange`, body, {
             headers: {
               Authorization: `Bearer ${this.token}`,
               'Content-Type': 'application/json', // critical

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../environment';
 
 @Component({
   selector: 'app-signup',
@@ -30,7 +31,7 @@ export class SignupComponent {
       return;
     }
 
-    this.http.post('http://localhost:5075/api/auth/signup', this.signupForm.value)
+    this.http.post(`${environment.apiUrl}/api/auth/signup`, this.signupForm.value)
       .subscribe({
         next: () => {
           Swal.fire('Success!', 'Account created successfully!', 'success')

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { environment } from '../../environment';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,7 @@ export class LoginComponent {
 
     const { username, password } = this.loginForm.value;
 
-    this.http.post('http://localhost:5075/api/auth/login', { username, password })
+    this.http.post(`${environment.apiUrl}/api/auth/login`, { username, password })
       .subscribe({
         next: (res: any) => {
           console.log(res);
